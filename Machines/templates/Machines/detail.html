@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="alert alert-dark" role="alert">
+<a class="btn btn-dark btn-lg rounded-pill " href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+  <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+  <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+</svg>
+      Επεξεργασία μηχανήματος
+</a>
+</div>
+
+<div class="container-fluid">
+<p></p>
+
+ {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+        <div id="form_errors">
+            {% for key, value in form.errors.items %}
+                <span class="fieldWrapper">
+                    {{ key }}:{{ value }}
+                </span>
+            {% endfor %}
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+
+{% load crispy_forms_tags %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <table class="table table-secondary table-bordered">
+        <thead>
+        <tr class="table-primary">
+
+                <th><label about=""> Μηχάνημα </label></th>
+                <th>Ανταλλακτικά</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+            <td>
+                <div class="form-group col-md-5 mb-0">
+                    {{  form.model|as_crispy_field }}
+                    {{ form.prices_date|as_crispy_field }}
+                    <p>
+                    <a type="button" class="btn btn-info"  href="{% url 'Machines:get_italy_price' form.instance.pk %}" >
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bank2" viewBox="0 0 16 16">
+                            <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+                        </svg>
+                        Εύρεση τιμών Ιταλία
+                    </a>
+                    </p>
+                    <p>
+                        <a type="button" class="btn btn-warning"  href="{% url 'Machines:get_info_price' form.instance.pk %}" >
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bank2" viewBox="0 0 16 16">
+                                <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+                            </svg>
+                            Εύρεση τιμών Info-Copy
+                        </a>
+                    </p>
+                </div>
+            </td>
+
+            <td>
+                <div class="form-row col-md-5 mb-0">
+                    <ol>
+                        {% for spare_part in spare_parts %}
+                            <li>
+                                <a class="btn  btn-primary btn-sm" role="button" href="/Spareparts/{{ spare_part.pk }}">
+                                    {{ spare_part.description }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </td>
+
+        <tr class="table-primary" align="center">
+
+
+            <td colspan="2">
+                <button type="button" class="btn btn-info" onclick="goBack()">Πίσω</button>
+                <button type="submit" value="Αποθήκευση" class="btn btn-success">Αποθήκευση</button>
+                <a role="button" class="btn btn-danger" href="{% url 'Machines:delete_machine' form.instance.pk %}">Διαγραφή</a>
+                <br><br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+{% if task_id %}
+<div class="text-center" style="font-size: 14px">
+	<div id="progress-bar-message">
+	Αναμονή για εύρεση τιμών...
+	</div>
+</div>
+<script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+<div class='progress-wrapper' style="padding-top: 10px;">
+  <div id='progress-bar' class='progress-bar progress-bar-striped' role='progressbar' style="height:30px; width: 0%; border-radius: 5px">&nbsp;</div>
+</div>
+<div id="celery-result">
+</div>
+    {% endif %}
+
+
+<script>
+function goBack() {
+  window.history.back();
+
+}
+</script>
+{% if task_id %}
+<script type="text/javascript">
+	// Progress Bar (JQuery)
+	$(function () {
+		var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+		CeleryProgressBar.initProgressBar(progressUrl, {})
+	});
+</script>
+
+{% endif %}
+</div>
+{% endblock content %}
+
+
+
+
+
+

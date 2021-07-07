@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="alert alert-dark" role="alert">
+<a class="btn btn-dark btn-lg rounded-pill " href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+  <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+</svg>
+     Προσθήκη Ανταλλακτικού
+</a>
+</div>
+
+<div class="container-fluid">
+<p></p>
+
+ {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+        <div id="form_errors">
+            {% for key, value in form.errors.items %}
+                <span class="fieldWrapper">
+                    {{ key }}:{{ value }}
+                </span>
+            {% endfor %}
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+{% load crispy_forms_tags %}
+<form method="post">
+    {% csrf_token %}
+        <table class="table table-secondary table-bordered table-sm">
+
+            <tbody>
+                 <tr>
+                    <td>
+                        {{  form.Μηχάνημα|as_crispy_field }}
+                    </td>
+                    <td>
+                         {{ form.part_nr|as_crispy_field }}
+                    </td>
+                    <td>
+                        {{ form.description|as_crispy_field }}
+                    </td>
+                 </tr>
+                 <tr>
+                    <td>
+                        {{  form.ml_code|as_crispy_field }}
+                    </td>
+                    <td>
+                        {{ form.ital_code|as_crispy_field }}
+                    </td>
+                     <td>
+                        {{ form.ital_price|as_crispy_field }}
+                    </td>
+                 </tr>
+                 <tr>
+                    <td>
+                        {{ form.info_code|as_crispy_field }}
+                    </td>
+                    <td>
+                        {{  form.info_price|as_crispy_field }}
+                    </td>
+                    <td>
+                        {{ form.info_site_code|as_crispy_field }}
+                    </td>
+
+                 </tr>
+                <tr>
+                    <td colspan="3" class="table-secondary" align="center">
+                        <button type="button" class="btn btn-info" onclick="goBack()">Πίσω</button>
+                        <button type="submit" value="Αποθήκευση" class="btn btn-success">Αποθήκευση</button>
+
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+
+  </form>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+</div>
+{% endblock content %}
+
+
+
+
+
+

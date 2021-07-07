@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="alert alert-dark" role="alert">
+<a class="btn btn-dark btn-lg rounded-pill " href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+  <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+  <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+</svg>
+      Προσθήκη μηχανήματος
+</a>
+</div>
+
+<div class="container-fluid">
+<p></p>
+
+ {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+        <div id="form_errors">
+            {% for key, value in form.errors.items %}
+                <span class="fieldWrapper">
+                    {{ key }}:{{ value }}
+                </span>
+            {% endfor %}
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+{% load crispy_forms_tags %}
+<form  method="POST">
+    {% csrf_token %}
+    <table class="table table-secondary table-bordered">
+
+        <tr class="table-secondary" align="center">
+            <td>
+                <div class="form-group col-md-5 mb-0">
+                    {{ form.model|as_crispy_field }}
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+
+                <button type="button" class="btn btn-info" onclick="goBack()">Πίσω</button>
+                <button name="add_machine" type="submit" value="Αποθήκευση" class="btn btn-success">Αποθήκευση</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+</div>
+{% endblock content %}
+
+
+
+
+
+

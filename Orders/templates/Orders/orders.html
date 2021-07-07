@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="alert alert-dark" role="alert">
+<a class="btn btn-dark btn-lg rounded-pill " href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"  fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+</svg>
+                  Παραγγελίες
+</a>
+</div>
+    <table class="table table-hover table-bordered justify-content-center" id="data-table">
+        <thead>
+        <tr class="table-primary">
+
+            <th><label about=""> Ημερομηνία </label></th>
+             <th>Ανταλλακτικό</th>
+            <th><font color="orange">Κωδικός</font></th>
+            <th><font color="blue">Κωδικός Ιταλίας</font></th>
+            <th><font color="blue">Τιμή</font></th>
+            <th>Τεμάχια</th>
+            <th>Σύνολο</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in object_list %}
+        <tr>
+            <td>{{ obj.date}}  </td>
+            <td><a role="button" class="btn btn-primary" href="{{ obj.pk }}"> {{ obj.spare_part }}</a></td>
+            <td>{{ obj.spare_part.ml_code}}</td>
+            <td>{{ obj.spare_part.ital_code}}</td>
+
+                    <td>{{ obj.price}} €</td>
+                    <td>{{ obj.pieces}}</td>
+                    <td>{{ obj.total}} €</td>
+
+         {% endfor %}
+        </tr>
+
+        </tbody>
+        <tfoot>
+        <tr class="table-primary">
+
+            <th><label about=""> Ημερομηνία </label></th>
+             <th>Ανταλλακτικό</th>
+            <th><font color="orange">Κωδικός</font></th>
+            <th><font color="blue">Κωδικός Ιταλίας</font></th>
+            <th><font color="blue">Τιμή</font></th>
+            <th>Τεμάχια</th>
+            <th>Σύνολο</th>
+
+
+        </tr>
+
+        </tfoot>
+    </table>
+
+
+
+
+    {% if page_obj.paginator.num_pages > 1 %}
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="pagination-action" href="?page=1">
+                    <svg class="bi bi-caret-left-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 00-1.659-.753l-5.48 4.796a1 1 0 000 1.506z"/>
+                    </svg>
+                </a>
+            </li>
+
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                    Προηγούμενο
+                </a>
+            </li>
+
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+            <li class="page-item active">
+
+                <a class="page-link" href="?page={{ num }}">
+                    {{ num }}
+                </a>
+                <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}">
+                    {{ num }}
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                    Επόμενη
+                </a>
+            </li>
+            <li class="page-item">
+
+                <a class="pagination-action" href="?page={{ page_obj.paginator.num_pages }}">
+                    <svg class="bi bi-caret-right-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 011.659-.753l5.48 4.796a1 1 0 010 1.506z"/>
+                    </svg>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% endif %}
+
+
+    <p>
+        <button type="button" class="btn btn-info" onclick="goBack()">Πίσω</button>
+
+    </p>
+    <script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+
+{% endblock %}
+

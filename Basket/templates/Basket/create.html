@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<div class="alert alert-dark" role="alert">
+<a class="btn btn-dark btn-lg rounded-pill " href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg>
+     Προσθήκη Ανταλλακτικού στο Καλάθι
+</a>
+</div>
+
+<div class="container-fluid">
+<p></p>
+
+ {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+        <div id="form_errors">
+            {% for key, value in form.errors.items %}
+                <span class="fieldWrapper">
+                    {{ key }}:{{ value }}
+                </span>
+            {% endfor %}
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+{% load crispy_forms_tags %}
+<form method="POST">
+    {% csrf_token %}
+
+    <table class="table table-hover table-bordered justify-content-center" id="data-table">
+    <thead>
+        <tr class="table-primary">
+            <th>Μηχάνημα</th>
+                <th>Ανταλλακτικό</th>
+                <th>Κωδικός</th>
+                <th>Τιμή</th>
+                <th>Τεμάχια</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <div class="form-group col-md-5 mb-0">
+
+                    {{ form.machine }}
+                </div>
+
+            </td>
+
+            <td>
+                <div class="form-group col-md-5 mb-0">
+
+                    {{ form.spare_part}}
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group col-md-5 mb-0">
+                    {{ form.ml_code }}
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group col-md-5 mb-0">
+                    {{ form.price }}
+                </div>
+
+            </td>
+             <td>
+                <div class="form-group col-md-5 mb-0">
+                    {{  form.pieces }}
+                </div>
+
+            </td>
+        </tr>
+        <tr class="table-primary" align="left">
+
+
+            <td colspan="5" align="center">
+                <button type="button" class="btn btn-info" onclick="goBack()">Πίσω</button>
+                <button type="submit" value="Αποθήκευση" class="btn btn-success">Προσθήκη</button>
+                <br><br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+</div>
+{% endblock content %}
+
+
+
+
+
+

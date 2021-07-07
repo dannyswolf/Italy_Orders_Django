@@ -1,0 +1,118 @@
+<!doctype html>
+{% load static %}
+<html lang="el">
+
+<head>
+    <title> Παραγγελίες Ιταλία</title>
+     <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+
+    <!-- Bootstrap CSS -->
+    <link   type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'icons/popup_logo_ir.ico' %}"/>
+
+    <!-- start -->
+    <link rel="stylesheet" href="{% static 'fontawesome/5.13.0/css/all.css' %}">
+    <!-- end -->
+
+    <!-- DataTable -->
+    <link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}"/>
+
+
+    <!--    Calendar -->
+     <link rel="stylesheet" type="text/css" href="{% static 'Calendar/css/styles.css' %}">
+
+</head>
+<body style="background-color:#EFF0F1;">
+
+{% include 'navbar.html' %}
+<center>
+ {% block content %}
+
+
+
+    </center>
+{% endblock content %}
+
+{%  block js %}
+
+<!--  https://datatables.net/manual/installation  -->
+<script type="text/javascript" src="{% static 'DataTables/datatables.js' %}"></script>
+
+<script>
+
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+
+    $('#data-table tfoot th').each( function () {
+
+        var title = $(this).text();
+
+            $(this).html( '<input type="text" placeholder="Αναζήτηση '+title+'" />' );
+
+    } );
+
+    // DataTable
+
+    var table =  $('#data-table').DataTable({
+ "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "autoWidth": false,
+        "processing": true,
+        "scrollY":        "400px",
+        "scrollCollapse": true,
+        "paging":         false,
+        scrollX: true,
+
+    dom: 'B<"center">lfrtip',
+
+    buttons: {
+        name: 'primary',
+        buttons: [  {
+            extend: 'copy',
+            text: 'Αντιγραφή'
+        },
+        {
+            extend: 'excel',
+            text: 'Excel',
+            exportOptions: {
+                modifier: {
+                    page: 'current'
+                }
+            }
+        },
+
+         'pdf', 'print', 'colvis',
+        'colvisRestore' ]
+
+    }
+});
+
+    // Apply the search
+    table.columns().every( function () {
+
+        var that = this;
+
+        $( 'input', this.footer() ).on( 'keyup change clear', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );
+
+
+</script>
+
+
+{%  endblock js %}
+
+</body>
+
+</html>

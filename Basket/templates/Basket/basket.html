@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="alert alert-dark" role="alert">
+<a class="btn btn-dark btn-lg rounded-pill " href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg>
+     Καλάθι
+</a>
+</div>
+
+<h3><span class="btn btn-danger btn-lg active">Τελικό Σύνολο: {{ sum_total }} <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-currency-euro" viewBox="0 0 16 16">
+  <path d="M4 9.42h1.063C5.4 12.323 7.317 14 10.34 14c.622 0 1.167-.068 1.659-.185v-1.3c-.484.119-1.045.17-1.659.17-2.1 0-3.455-1.198-3.775-3.264h4.017v-.928H6.497v-.936c0-.11 0-.219.008-.329h4.078v-.927H6.618c.388-1.898 1.719-2.985 3.723-2.985.614 0 1.175.05 1.659.177V2.194A6.617 6.617 0 0 0 10.341 2c-2.928 0-4.82 1.569-5.244 4.3H4v.928h1.01v1.265H4v.928z"/>
+</svg>
+</span></h3>
+
+    <table class="table table-hover table-bordered justify-content-center" id="data-table">
+        <thead>
+        <tr class="table-primary">
+
+                <th><label about=""> Μηχάνημα </label></th>
+                <th>Περιγραφή</th>
+                <th>Κωδικός</th>
+                <th>Τιμή</th>
+                <th>Τεμάχια</th>
+                <th>Σύνολο</th>
+
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in object_list %}
+        <tr>
+
+
+                <td><a role="button"  class="btn btn-secondary" href=" ../Machines/{{ obj.machine.pk }}" >{{ obj.machine}}</a> </td>
+                    <td><a role="button" class="btn btn-primary" href=" {{ obj.pk }}" >{{ obj.spare_part.description}} </a> </td>
+                    <td> {{ obj.ml_code}}</td>
+                    <td>{{ obj.price}} €</td>
+                    <td>{{ obj.pieces}}  </td>
+                    <td>{{ obj.total}} €</td>
+
+
+         {% endfor %}
+        </tr>
+
+
+        </tbody>
+        <tfoot>
+        <tr class="table-primary">
+
+            <th><label about=""> Μηχάνημα </label></th>
+                <th>Περιγραφή</th>
+                <th>Κωδικός</th>
+                <th>Τιμή</th>
+                <th>Τεμάχια</th>
+                <th>Σύνολο</th>
+
+
+        </tr>
+
+        </tfoot>
+    </table>
+
+<p>
+        <button type="button" class="btn btn-info" onclick="goBack()">Πίσω</button>
+         <form action="{% url 'Basket:make_order' %}" method="post">
+                 {% csrf_token %}
+        <button type="submit" class="btn btn-success btn-lg active"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+                        <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg> Ολοκλήρωση Παραγγελίας</button>
+        </form>
+</p>
+    <script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+
+{% endblock %}
+
