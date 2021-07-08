@@ -31,6 +31,8 @@ MarkupPy==1.14
 odfpy==1.4.1
 openpyxl==3.0.7
 parse==1.19.0
+pip-autoremove==0.9.1
+pipdeptree==2.0.0
 pkg-resources==0.0.0
 prompt-toolkit==3.0.19
 pyee==8.1.0
