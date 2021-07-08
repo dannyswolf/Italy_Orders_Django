@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from Spareparts.models import SpareParts
-from warehouse.models import (SHARP, KONICA, RICOH)
+from warehouse.models import (SHARP, KONICA, RICOH, SAMSUNG, EPSON, KYOCERA, OKI, CANON, BROTHER, LEXMARK)
 
 
 class HomeView(LoginRequiredMixin, ListView):
@@ -33,6 +33,48 @@ class HomeView(LoginRequiredMixin, ListView):
             elif 'ricoh' in str(obj.Μηχάνημα).lower():
                 try:
                     pieces = RICOH.objects.filter(ΚΩΔΙΚΟΣ=f"{obj.ml_code}").first()
+                    obj.pieces = pieces.ΤΕΜΑΧΙΑ
+                except AttributeError:
+                    pass
+            elif 'samsung' in str(obj.Μηχάνημα).lower():
+                try:
+                    pieces = SAMSUNG.objects.filter(ΚΩΔΙΚΟΣ=f"{obj.ml_code}").first()
+                    obj.pieces = pieces.ΤΕΜΑΧΙΑ
+                except AttributeError:
+                    pass
+            elif 'epson' in str(obj.Μηχάνημα).lower():
+                try:
+                    pieces = EPSON.objects.filter(ΚΩΔΙΚΟΣ=f"{obj.ml_code}").first()
+                    obj.pieces = pieces.ΤΕΜΑΧΙΑ
+                except AttributeError:
+                    pass
+            elif 'kyocera' in str(obj.Μηχάνημα).lower():
+                try:
+                    pieces = KYOCERA.objects.filter(ΚΩΔΙΚΟΣ=f"{obj.ml_code}").first()
+                    obj.pieces = pieces.ΤΕΜΑΧΙΑ
+                except AttributeError:
+                    pass
+            elif 'oki' in str(obj.Μηχάνημα).lower():
+                try:
+                    pieces = OKI.objects.filter(ΚΩΔΙΚΟΣ=f"{obj.ml_code}").first()
+                    obj.pieces = pieces.ΤΕΜΑΧΙΑ
+                except AttributeError:
+                    pass
+            elif 'canon' in str(obj.Μηχάνημα).lower():
+                try:
+                    pieces = CANON.objects.filter(ΚΩΔΙΚΟΣ=f"{obj.ml_code}").first()
+                    obj.pieces = pieces.ΤΕΜΑΧΙΑ
+                except AttributeError:
+                    pass
+            elif 'brother' in str(obj.Μηχάνημα).lower():
+                try:
+                    pieces = BROTHER.objects.filter(ΚΩΔΙΚΟΣ=f"{obj.ml_code}").first()
+                    obj.pieces = pieces.ΤΕΜΑΧΙΑ
+                except AttributeError:
+                    pass
+            elif 'lexmark' in str(obj.Μηχάνημα).lower():
+                try:
+                    pieces = LEXMARK.objects.filter(ΚΩΔΙΚΟΣ=f"{obj.ml_code}").first()
                     obj.pieces = pieces.ΤΕΜΑΧΙΑ
                 except AttributeError:
                     pass

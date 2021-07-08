@@ -1,6 +1,6 @@
 from django.db import models
 from django.shortcuts import reverse
-import os
+
 
 
 # Create your models here.
