@@ -45,7 +45,7 @@ requests==2.25.1
 requests-html==0.10.0
 six==1.16.0
 soupsieve==2.2.1
-sqlparse==0.4.2
+sqlparse==0.4.4
 tablib==3.0.0
 tqdm==4.61.1
 typing-extensions==3.10.0.0
