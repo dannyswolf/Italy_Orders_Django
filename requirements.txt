@@ -7,7 +7,7 @@ bs4==0.0.1
 cached-property==1.5.2
 celery>=5.2.2
 celery-progress==0.1.0
-certifi==2023.7.22
+certifi==2024.7.4
 chardet==4.0.0
 click==7.1.2
 click-didyoumean==0.0.3
